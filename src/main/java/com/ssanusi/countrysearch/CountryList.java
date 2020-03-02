@@ -1,6 +1,7 @@
 package com.ssanusi.countrysearch;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CountryList {
     ArrayList<Country> countryList = new ArrayList<>();
@@ -216,5 +217,15 @@ public class CountryList {
                 filteredCountries.add(country);
 
         return filteredCountries;
+    }
+
+    public Optional<Country> getMinPopulation() {
+        return countryList.stream()
+                .reduce((accumulator, current) -> accumulator.getPopulation() < current.getPopulation() ? accumulator : current);
+    }
+
+    public Optional<Country> getMaxPopulation() {
+        return countryList.stream()
+                .reduce((accumulator, current) -> accumulator.getPopulation() > current.getPopulation() ? accumulator : current);
     }
 }
