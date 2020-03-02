@@ -198,14 +198,23 @@ public class CountryList {
         countryList.add(new Country("Guam",167245,540,31));
         countryList.add(new Country("Channel Islands",166828,190,44));
         countryList.add(new Country("Curacao",162547,444,42));
-        countryList.add(new Country("Kiribati",120428,810,23));
-        countryList.add(new Country("St. Vincent & Grenadines",110488,390,32));
-        countryList.add(new Country("Tonga",110041,720,22));
-        countryList.add(new Country("Grenada",108825,340,29));
-        countryList.add(new Country("Micronesia",106983,700,23));
-        countryList.add(new Country("Aruba",106053,180,41));
-        countryList.add(new Country("U.S. Virgin Islands",104909,350,42));
-        countryList.add(new Country("Antigua and Barbuda",104084,440,32));
-        countryList.add(new Country("Seychelles",95702,460,36));
+        countryList.add(new Country("Kiribati", 120428, 810, 23));
+        countryList.add(new Country("St. Vincent & Grenadines", 110488, 390, 32));
+        countryList.add(new Country("Tonga", 110041, 720, 22));
+        countryList.add(new Country("Grenada", 108825, 340, 29));
+        countryList.add(new Country("Micronesia", 106983, 700, 23));
+        countryList.add(new Country("Aruba", 106053, 180, 41));
+        countryList.add(new Country("U.S. Virgin Islands", 104909, 350, 42));
+        countryList.add(new Country("Antigua and Barbuda", 104084, 440, 32));
+        countryList.add(new Country("Seychelles", 95702, 460, 36));
+    }
+
+    public ArrayList<Country> findCountries(CheckCountry tester) {
+        ArrayList<Country> filteredCountries = new ArrayList<>();
+        for (Country country : countryList)
+            if (tester.test(country))
+                filteredCountries.add(country);
+
+        return filteredCountries;
     }
 }
