@@ -18,9 +18,32 @@ public class CountryController {
         return new ResponseEntity<>(CountrySearchApplication.worldCountryList.countryList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/names/{letter}", produces = {"application/json"})
-    public ResponseEntity<?> getCountryByInitial(@PathVariable char letter) {
+    @GetMapping(value = "/names/start/{letter}", produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByInitial(@PathVariable char letter) {
         ArrayList<Country> countryList = CountrySearchApplication.worldCountryList.findCountries(c -> c.getName().toUpperCase().charAt(0) == Character.toUpperCase(letter));
         return new ResponseEntity<>(countryList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/names/size/{number}", produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByNameLength(@PathVariable int number) {
+        ArrayList<Country> countryList = CountrySearchApplication.worldCountryList.findCountries(c -> c.getName().length() >= number);
+        countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+        return new ResponseEntity<>(countryList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/population/size/{number}", produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByPopulation(@PathVariable int number) {
+        ArrayList<Country> countryList = CountrySearchApplication.worldCountryList.findCountries(c -> c.getPopulation() >= number);
+        return new ResponseEntity<>(countryList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/population/min", produces = {"application/json"})
+    public ResponseEntity<?> getMinPopulation() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMinPopulation(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/population/max", produces = {"application/json"})
+    public ResponseEntity<?> getMaxPopulation() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMaxPopulation(), HttpStatus.OK);
     }
 }
