@@ -46,4 +46,30 @@ public class CountryController {
     public ResponseEntity<?> getMaxPopulation() {
         return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMaxPopulation(), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/population/median", produces = {"application/json"})
+    public ResponseEntity<?> getMedianPopulation() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMedianPopulation(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/age/{age}", produces = {"application/json"})
+    public ResponseEntity<?> getCountryByAge(@PathVariable int age) {
+        ArrayList<Country> countryList = CountrySearchApplication.worldCountryList.findCountries(c -> c.getMedian() >= age);
+        return new ResponseEntity<>(countryList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/age/min", produces = {"application/json"})
+    public ResponseEntity<?> getMinAge() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMinAge(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/age/max", produces = {"application/json"})
+    public ResponseEntity<?> getMaxAge() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMaxAge(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/age/median", produces = {"application/json"})
+    public ResponseEntity<?> getMedianByAge() {
+        return new ResponseEntity<>(CountrySearchApplication.worldCountryList.getMedianAge(), HttpStatus.OK);
+    }
 }

@@ -1,7 +1,10 @@
 package com.ssanusi.countrysearch;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CountryList {
     ArrayList<Country> countryList = new ArrayList<>();
@@ -227,5 +230,34 @@ public class CountryList {
     public Optional<Country> getMaxPopulation() {
         return countryList.stream()
                 .reduce((accumulator, current) -> accumulator.getPopulation() > current.getPopulation() ? accumulator : current);
+    }
+
+    public Country getMedianPopulation() {
+        List<Country> sortedByPopulation = countryList.stream().sorted(Comparator.comparingDouble(c -> c.getPopulation())).collect(Collectors.toList());
+        return sortedByPopulation.get(median(sortedByPopulation));
+    }
+
+    public Optional<Country> getMinAge() {
+        return countryList.stream()
+                .reduce((accumulator, current) -> accumulator.getMedian() < current.getMedian() ? accumulator : current);
+    }
+
+    public Optional<Country> getMaxAge() {
+        return countryList.stream()
+                .reduce((accumulator, current) -> accumulator.getMedian() > current.getMedian() ? accumulator : current);
+    }
+
+    public Country getMedianAge() {
+        List<Country> sortedByAge = countryList.stream().sorted(Comparator.comparingDouble(c -> c.getMedian())).collect(Collectors.toList());
+        return sortedByAge.get(median(sortedByAge));
+    }
+
+    private int median(List<Country> array) {
+        int arrayLength = array.size();
+
+        if (arrayLength % 2 == 0)
+            return arrayLength / 2 + arrayLength / 2 - 1;
+
+        return arrayLength / 2;
     }
 }
